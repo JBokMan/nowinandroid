@@ -162,6 +162,7 @@ fun NiaApp(appState: NiaAppState) {
                     Column(Modifier.fillMaxSize()) {
                         // Show the top app bar on top level destinations.
                         val destination = appState.currentTopLevelDestination
+                        val shouldShowTopAppBar = destination != null
                         if (destination != null) {
                             NiaTopAppBar(
                                 titleRes = destination.titleTextId,
@@ -189,6 +190,13 @@ fun NiaApp(appState: NiaAppState) {
                                     actionLabel = action,
                                     duration = Short,
                                 ) == ActionPerformed
+                            },
+                            modifier = if (shouldShowTopAppBar) {
+                                Modifier.consumeWindowInsets(
+                                    WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
+                                )
+                            } else {
+                                Modifier
                             },
                         )
                     }
